@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Pulse</title>
+    <meta
+      name="description"
+      content="Mona's Project Pulse dashboard for active initiatives, owners, status, and priorities."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar" aria-label="Dashboard header">
+        <div>
+          <p class="eyebrow">Mona's team</p>
+          <h1>Project Pulse</h1>
+        </div>
+        <div class="topbar-summary" aria-label="Summary metrics">
+          <div class="summary-pill">
+            <span class="summary-label">Active</span>
+            <strong>12</strong>
+          </div>
+          <div class="summary-pill">
+            <span class="summary-label">At Risk</span>
+            <strong>3</strong>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard" aria-live="polite">
+        <section class="dashboard-header" aria-label="Project overview">
+          <div>
+            <p class="eyebrow accent">Portfolio Snapshot</p>
+            <h2>Delivery momentum</h2>
+          </div>
+          <button type="button" class="primary-action">Review board</button>
+        </section>
+
+        <section class="project-grid" id="project-grid" aria-label="Projects overview"></section>
+      </main>
+    </div>
+
+    <script>
+      fetch('project-data.json')
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error('Unable to load project data');
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const projectGrid = document.getElementById('project-grid');
+          const projects = data.projects || [];
+
+          projectGrid.innerHTML = projects
+            .map(
+              (project) => `
+                <article class="project-card" aria-label="Project ${project.name}">
+                  <div class="card-header">
+                    <div>
+                      <p class="project-owner">${project.owner}</p>
+                      <h3>${project.name}</h3>
+                    </div>
+                    <span class="status-badge status-${project.status.toLowerCase().replace(/\s+/g, '-')}">${project.status}</span>
+                  </div>
+
+                  <p class="summary">${project.recentActivity}</p>
+
+                  <div class="meta-row">
+                    <span class="meta-label">Priority</span>
+                    <span class="priority priority-${project.priority.toLowerCase()}">${project.priority}</span>
+                  </div>
+                </article>
+              `
+            )
+            .join('');
+        })
+        .catch((error) => {
+          const projectGrid = document.getElementById('project-grid');
+          projectGrid.innerHTML = `
+            <article class="project-card error-card" aria-live="assertive">
+              <h3>Project data unavailable</h3>
+              <p>${error.message}</p>
+            </article>
+          `;
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "projects": [
+    {
+      "name": "Northstar Launch",
+      "owner": "Alicia Chen",
+      "status": "On Track",
+      "recentActivity": "Design review completed; staging checklist signed off.",
+      "priority": "High"
+    },
+    {
+      "name": "Conversational Insights",
+      "owner": "Marcus Lee",
+      "status": "At Risk",
+      "recentActivity": "Two dependencies slipped; team is re-sequencing QA.",
+      "priority": "Critical"
+    },
+    {
+      "name": "Sponsor Portal",
+      "owner": "Priya Nair",
+      "status": "Healthy",
+      "recentActivity": "User feedback from alpha cohort was incorporated.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Ops Automation",
+      "owner": "Daniel Ortiz",
+      "status": "Delayed",
+      "recentActivity": "Integration tests are blocked by vendor API changes.",
+      "priority": "High"
+    }
+  ]
+}
